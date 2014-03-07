@@ -1,6 +1,10 @@
 AUTOMAKE_OPTIONS = foreign
-SUBDIRS = src man lib/liftoff vendor templates
+SUBDIRS = src man lib/liftoff vendor defaults
 EXTRA_DIST = LICENSE.txt README.md
+
+TEMPLATES = templates.tar.gz
+
+dist_pkgdata_DATA = $(TEMPLATES)
 
 .PHONY: release \
 	release_build release_push release_clean \
@@ -16,11 +20,14 @@ edit_package = sed \
 
 release: release_build release_push release_clean
 
-release_build: release_build_tarball release_build_homebrew
+release_build: package_templates release_build_tarball release_build_homebrew
 
 release_push: release_push_tarball release_push_homebrew
 
 release_clean: release_clean_tarball release_clean_homebrew
+
+package_templates:
+	tar -czf templates.tar.gz templates/*
 
 release_build_tarball: Makefile distcheck
 	git clone --branch gh-pages git@github.com:thoughtbot/liftoff.git gh-pages
@@ -51,3 +58,8 @@ release_clean_homebrew:
 
 DIST_SHA: Makefile distcheck
 	$(eval DIST_SHA := $(shell shasum $(srcdir)/$(DIST_ARCHIVES) | cut -d' ' -f1))
+
+install-data-hook:
+	cd $(DESTDIR)$(pkgdatadir); \
+	gunzip $(TEMPLATES); \
+	rm $(TEMPLATES)

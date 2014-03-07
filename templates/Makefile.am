@@ -1,1 +1,1 @@
-dist_pkgruby_DATA = $(templatefiles)
+dist_templates_DATA = $(templatefiles)

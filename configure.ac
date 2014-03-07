@@ -34,19 +34,23 @@ if test "$newer" == "$srcdir/Gemfile.lock"; then
 fi
 
 rubydir=$datadir/$PACKAGE/ruby
+defaultsdir=$datadir/$PACKAGE/defaults
+templatesdir=$datadir/$PACKAGE/templates
 pkgrubydir=$rubydir/$PACKAGE
 libfiles="$(cd "$(dirname "$0")/lib/liftoff"; echo *.rb)"
 vendorfiles="$(cd "$(dirname "$0")/vendor"; echo $(find gems -type f))"
-templatefiles = "$(cd "$(dirname "$0")/templates"; echo $(find .))"
+templatefiles="$(cd "$(dirname "$0")/templates"; echo $(find . -type f))"
 gemsetuppath=$datadir/$PACKAGE/gems/setup.rb
 
 AC_SUBST([RUBY])
 AC_SUBST([rubydir])
+AC_SUBST([defaultsdir])
+AC_SUBST([templatesdir])
 AC_SUBST([pkgrubydir])
 AC_SUBST([libfiles])
 AC_SUBST([vendorfiles])
 AC_SUBST([templatefiles])
 AC_SUBST([gemsetuppath])
 
-AC_CONFIG_FILES([Makefile src/Makefile lib/liftoff/Makefile man/Makefile vendor/Makefile templates/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile lib/liftoff/Makefile man/Makefile vendor/Makefile defaults/Makefile])
 AC_OUTPUT
