@@ -6,8 +6,6 @@
 //  Copyright (c) <%= Time.now.strftime('%Y') %> <%= company %>. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 #import "<%= prefix %>AppDelegate.h"
 
 int main(int argc, char *argv[])
